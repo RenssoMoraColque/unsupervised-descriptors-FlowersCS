@@ -1,0 +1,11 @@
+# Placeholder files to maintain directory structure
+
+# data/raw/
+# This directory will contain the downloaded STL-10 dataset
+# Structure after download:
+# - stl10_binary.tar.gz
+# - stl10_unlabeled/
+# - stl10_train/
+# - stl10_test/
+
+# The STL-10 dataset will be automatically downloaded when running scripts

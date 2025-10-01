@@ -1,0 +1,9 @@
+# Results directory
+
+# This directory will contain:
+# - models/: Trained descriptors and classifiers (.pkl, .joblib files)
+# - metrics/: Evaluation results (.json files)
+# - logs/: Execution logs and debug information
+# - visualizations/: Generated plots and charts
+
+# Files are created during script execution

@@ -1,0 +1,9 @@
+# Processed data directory
+
+# This directory will contain:
+# - Extracted features saved as .npy files
+# - Trained models and vocabularies (.pkl files)
+# - Preprocessed image data
+# - Feature matrices for quick loading
+
+# Files are generated during the evaluation pipeline
