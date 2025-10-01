@@ -22,7 +22,7 @@ from .local_descriptors import (
 )
 
 from .encoding import (
-    BagOfVisualWords,
+    BagOfWordsEncoder,
     VLADEncoder,
     FisherVectorEncoder
 )
@@ -39,7 +39,7 @@ __all__ = [
     "SURFDescriptor",
     "ORBDescriptor",
     "BRISKDescriptor",
-    "BagOfVisualWords",
+    "BagOfWordsEncoder",
     "VLADEncoder",
     "FisherVectorEncoder"
 ]
