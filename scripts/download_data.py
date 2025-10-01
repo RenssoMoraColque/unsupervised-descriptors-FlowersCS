@@ -19,7 +19,7 @@ import logging
 # Add src to path for imports
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from utils.data_loader import STL10Dataset
+from utils.data_loader import STL10DataLoader
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -167,24 +167,23 @@ def test_data_loading(data_dir: str) -> None:
     
     try:
         # Initialize dataset
-        dataset = STL10Dataset(data_dir)
+        dataset = STL10DataLoader(data_dir)
         
         # Load a small sample
-        logger.info("Loading training data sample...")
-        X_train, y_train = dataset.load_train_data()
+        logger.info("Loading training and test data...")
+        X_train, y_train, X_test, y_test = dataset.load_train_test()
         logger.info(f"Training data shape: {X_train.shape}, labels shape: {y_train.shape}")
-        
-        logger.info("Loading test data sample...")
-        X_test, y_test = dataset.load_test_data()
         logger.info(f"Test data shape: {X_test.shape}, labels shape: {y_test.shape}")
         
         logger.info("Loading unlabeled data sample...")
-        X_unlabeled = dataset.load_unlabeled_data(max_samples=1000)
-        logger.info(f"Unlabeled data shape: {X_unlabeled.shape}")
+        X_unlabeled = dataset.load_unlabeled()[:1000]  # Solo primeros 1000
+        logger.info(f"Unlabeled data count: {len(X_unlabeled)}")
         
         # Verify data properties
-        assert X_train.shape[1:] == (96, 96, 3), f"Unexpected image shape: {X_train.shape[1:]}"
-        assert X_train.dtype == np.uint8, f"Unexpected dtype: {X_train.dtype}"
+        # Convert first image to numpy for verification
+        sample_img = np.array(X_train[0])
+        assert sample_img.shape == (96, 96, 3), f"Unexpected image shape: {sample_img.shape}"
+        assert sample_img.dtype == np.uint8, f"Unexpected dtype: {sample_img.dtype}"
         assert len(np.unique(y_train)) == 10, f"Unexpected number of classes: {len(np.unique(y_train))}"
         
         logger.info("Data loading test passed!")
@@ -194,9 +193,9 @@ def test_data_loading(data_dir: str) -> None:
         print("=" * 40)
         print(f"Training samples: {len(X_train)}")
         print(f"Test samples: {len(X_test)}")
-        print(f"Image dimensions: {X_train.shape[1:]}")
-        print(f"Data type: {X_train.dtype}")
-        print(f"Value range: [{X_train.min()}, {X_train.max()}]")
+        print(f"Image dimensions: {sample_img.shape}")
+        print(f"Data type: {sample_img.dtype}")
+        print(f"Value range: [{sample_img.min()}, {sample_img.max()}]")
         print(f"Classes: {sorted(np.unique(y_train))}")
         
         # Class distribution

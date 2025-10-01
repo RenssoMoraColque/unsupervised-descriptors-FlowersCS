@@ -40,7 +40,7 @@ class STL10DataLoader:
         self.data_root = data_root
         self.download = download
         self.transform = transform or transforms.Compose([
-            transforms.ToPILImage()
+            transforms.ToTensor()
         ])
         
         # Create data directory
@@ -104,6 +104,16 @@ class STL10DataLoader:
             if i % 1000 == 0:
                 print(f"Loaded {i}/{len(dataset)} {split} images")
             image, label = dataset[i]
+            # Convert PIL image to numpy array
+            if hasattr(image, 'numpy'):
+                # If it's a tensor, convert to numpy
+                image = image.numpy()
+                # Convert from CHW to HWC format
+                if image.ndim == 3 and image.shape[0] == 3:
+                    image = np.transpose(image, (1, 2, 0))
+            elif isinstance(image, Image.Image):
+                # If it's still a PIL image, convert to numpy
+                image = np.array(image)
             images.append(image)
             labels.append(label)
         
