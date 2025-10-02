@@ -82,8 +82,8 @@ class DescriptorTrainer:
         self.local_descriptors = {
             'sift': SIFTDescriptor(),
             'orb': ORBDescriptor(),
-            'brisk': BRISKDescriptor(),
-            'surf': SURFDescriptor()
+            'brisk': BRISKDescriptor()
+            # 'surf': SURFDescriptor()  # Requires opencv-contrib-python
         }
         
         # Initialize encoders for local descriptors

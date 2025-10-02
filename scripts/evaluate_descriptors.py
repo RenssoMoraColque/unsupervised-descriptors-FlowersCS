@@ -104,8 +104,8 @@ class DescriptorEvaluator:
             'gist': GISTDescriptor,
             'sift': SIFTDescriptor,
             'orb': ORBDescriptor,
-            'brisk': BRISKDescriptor,
-            'surf': SURFDescriptor
+            'brisk': BRISKDescriptor
+            # 'surf': SURFDescriptor  # Requires opencv-contrib-python
         }
         
         # Encoder classes mapping
