@@ -172,8 +172,8 @@ def test_data_loading(data_dir: str) -> None:
         # Load a small sample
         logger.info("Loading training and test data...")
         X_train, y_train, X_test, y_test = dataset.load_train_test()
-        logger.info(f"Training data shape: {X_train.shape}, labels shape: {y_train.shape}")
-        logger.info(f"Test data shape: {X_test.shape}, labels shape: {y_test.shape}")
+        logger.info(f"Training data count: {len(X_train)}, labels count: {len(y_train)}")
+        logger.info(f"Test data count: {len(X_test)}, labels count: {len(y_test)}")
         
         logger.info("Loading unlabeled data sample...")
         X_unlabeled = dataset.load_unlabeled()[:1000]  # Solo primeros 1000
@@ -183,7 +183,16 @@ def test_data_loading(data_dir: str) -> None:
         # Convert first image to numpy for verification
         sample_img = np.array(X_train[0])
         assert sample_img.shape == (96, 96, 3), f"Unexpected image shape: {sample_img.shape}"
-        assert sample_img.dtype == np.uint8, f"Unexpected dtype: {sample_img.dtype}"
+        
+        # Accept both uint8 (0-255) and float32 (0.0-1.0) formats
+        assert sample_img.dtype in [np.uint8, np.float32], f"Unexpected dtype: {sample_img.dtype}"
+        
+        # Verify value ranges based on dtype
+        if sample_img.dtype == np.uint8:
+            assert 0 <= sample_img.min() and sample_img.max() <= 255, f"Invalid value range for uint8: [{sample_img.min()}, {sample_img.max()}]"
+        elif sample_img.dtype == np.float32:
+            assert 0.0 <= sample_img.min() and sample_img.max() <= 1.0, f"Invalid value range for float32: [{sample_img.min()}, {sample_img.max()}]"
+        
         assert len(np.unique(y_train)) == 10, f"Unexpected number of classes: {len(np.unique(y_train))}"
         
         logger.info("Data loading test passed!")
@@ -193,7 +202,7 @@ def test_data_loading(data_dir: str) -> None:
         print("=" * 40)
         print(f"Training samples: {len(X_train)}")
         print(f"Test samples: {len(X_test)}")
-        print(f"Image dimensions: {sample_img.shape}")
+        print(f"Image dimensions: {np.array(X_train[0]).shape}")
         print(f"Data type: {sample_img.dtype}")
         print(f"Value range: [{sample_img.min()}, {sample_img.max()}]")
         print(f"Classes: {sorted(np.unique(y_train))}")
@@ -227,10 +236,10 @@ def main():
     # Create data directory
     data_dir = Path(args.data_dir)
     data_dir.mkdir(exist_ok=True)
-    
-    archive_path = data_dir / STL10_FILENAME
-    stl10_dir = data_dir / STL10_FOLDER
-    
+
+    archive_path = data_dir / "raw" / STL10_FILENAME
+    stl10_dir = data_dir / "raw" / STL10_FOLDER
+
     # Check if we need to download
     need_download = True
     if args.test_only:
