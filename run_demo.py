@@ -62,18 +62,26 @@ def check_dependencies():
     """Check if required packages are installed."""
     logger.info("Checking dependencies...")
     
-    required_packages = [
-        'numpy', 'opencv-python', 'scikit-learn', 'scikit-image',
-        'matplotlib', 'seaborn', 'pandas', 'torchvision', 'pillow'
-    ]
+    # Map of package names: install_name -> import_name
+    required_packages = {
+        'numpy': 'numpy',
+        'opencv-python': 'cv2', 
+        'scikit-learn': 'sklearn',
+        'scikit-image': 'skimage',
+        'matplotlib': 'matplotlib',
+        'seaborn': 'seaborn', 
+        'pandas': 'pandas',
+        'torchvision': 'torchvision',
+        'pillow': 'PIL'
+    }
     
     missing_packages = []
     
-    for package in required_packages:
+    for install_name, import_name in required_packages.items():
         try:
-            __import__(package.replace('-', '_'))
+            __import__(import_name)
         except ImportError:
-            missing_packages.append(package)
+            missing_packages.append(install_name)
     
     if missing_packages:
         logger.warning(f"Missing packages: {missing_packages}")
