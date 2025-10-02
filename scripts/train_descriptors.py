@@ -19,7 +19,7 @@ import numpy as np
 # Add src to path for imports
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from utils.data_loader import STL10Dataset
+from utils.data_loader import STL10DataLoader
 from descriptors.global_descriptors import (
     HOGDescriptor, LBPDescriptor, 
     ColorHistogramDescriptor, GISTDescriptor
@@ -68,7 +68,7 @@ class DescriptorTrainer:
         self.cache_dir.mkdir(exist_ok=True)
         
         # Initialize dataset
-        self.dataset = STL10Dataset(data_dir)
+        self.dataset = STL10DataLoader(data_dir)
         self.preprocessor = ImagePreprocessor()
         
         # Initialize descriptors

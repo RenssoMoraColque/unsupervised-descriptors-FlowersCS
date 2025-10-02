@@ -20,7 +20,7 @@ from sklearn.metrics import classification_report
 # Add src to path for imports
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from utils.data_loader import STL10Dataset
+from utils.data_loader import STL10DataLoader
 from descriptors.global_descriptors import (
     HOGDescriptor, LBPDescriptor, 
     ColorHistogramDescriptor, GISTDescriptor
@@ -79,7 +79,7 @@ class DescriptorEvaluator:
         self.results_dir.mkdir(exist_ok=True)
         
         # Initialize dataset and utilities
-        self.dataset = STL10Dataset(data_dir)
+        self.dataset = STL10DataLoader(data_dir)
         self.preprocessor = ImagePreprocessor()
         self.postprocessor = DescriptorPostprocessor()
         self.metrics = ClassificationMetrics()
