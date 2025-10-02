@@ -22,7 +22,7 @@ class STL10DataLoader:
     """
     
     def __init__(self, 
-                 data_root: str = "data/raw",
+                 data_root: str = "data/raw/stl10_binary",
                  download: bool = True,
                  transform: Optional[transforms.Compose] = None):
         """

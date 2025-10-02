@@ -6,7 +6,7 @@ RAW_DATA_PATH = "data/raw"
 PROCESSED_DATA_PATH = "data/processed"
 
 # STL-10 dataset configuration
-STL10_ROOT = "data/raw/STL10"
+STL10_ROOT = "data/raw/stl10_binary"
 STL10_SPLITS = {
     "unlabeled": "unlabeled",  # 100k images for unsupervised learning
     "train": "train",          # 5k labeled images for evaluation

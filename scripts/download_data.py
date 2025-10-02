@@ -166,8 +166,9 @@ def test_data_loading(data_dir: str) -> None:
     logger.info("Testing data loading...")
     
     try:
-        # Initialize dataset
-        dataset = STL10DataLoader(data_dir)
+        # Initialize dataset - pass the full path to stl10_binary
+        stl10_path = os.path.join(data_dir, "raw", "stl10_binary")
+        dataset = STL10DataLoader(stl10_path)
         
         # Load a small sample
         logger.info("Loading training and test data...")

@@ -75,7 +75,9 @@ ehthumbs.db
 Thumbs.db
 
 # Data directories (keep structure but ignore large files)
+data/raw/stl10_binary/
 data/raw/STL10/
+data/raw/*.tar.gz
 data/processed/*.npy
 data/processed/*.pkl
 data/processed/*.h5
